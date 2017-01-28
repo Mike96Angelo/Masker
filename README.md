@@ -9,7 +9,7 @@ A simple JavaScript library for masking HTML input fields.
 
 ### Install:
 ```
-$ npm install bars
+$ npm install maskerjs
 ```
 # What MaskerJS Looks Like
 
