@@ -14,7 +14,7 @@ $ npm install bars
 # What MaskerJS Looks Like
 
 * [Docs](docs/maskerjs.md)
-* [JSFiddle](https://jsfiddle.net/fypyk2jp/1/)
+* [JSFiddle](https://jsfiddle.net/fypyk2jp/2/)
 
 ### app.html:
 
@@ -29,7 +29,8 @@ var Masker = require('maskerjs');
 
 var telMask = new Masker(
     [
-        '+_ (___) ___-____',
+        '(___) ___-____',
+        '+_-___-___-____',
         '+_-___-____-____',
         '+_-____-____-____',
         '+__-____-____-____',
