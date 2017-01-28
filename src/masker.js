@@ -187,8 +187,8 @@ var Masker =
 	    _keydownListener: function _keydownListener() {
 	        var masker = this;
 
-	        return function EVENTS_KEYDOWN(evt, $el) {
-	            var el = $el[0],
+	        return function EVENTS_KEYDOWN(evt) {
+	            var el = evt.target,
 	                rule;
 
 	            var start = el.selectionStart,
