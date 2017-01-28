@@ -11,7 +11,7 @@ A simple JavaScript library for masking HTML input fields.
 ```
 $ npm install bars
 ```
-# What Bars Looks Like
+# What MaskerJS Looks Like
 
 * [Docs](docs/maskerjs.md)
 * [JSFiddle](https://jsfiddle.net/fypyk2jp/1/)
