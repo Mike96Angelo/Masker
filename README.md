@@ -2,7 +2,17 @@
 A simple JavaScript library for masking HTML input fields.
 
 
-example:
+* [JSFiddle](https://jsfiddle.net/fypyk2jp/1/)
+
+### Example
+
+app.html:
+
+```html
+<input id="tel" type="tel" placeholder="+1 (234) 567-8900">
+```
+
+app.js:
 
 ```JavaScript
 var Masker = require('maskerjs');
