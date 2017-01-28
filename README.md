@@ -13,7 +13,7 @@ $ npm install bars
 ```
 # What Bars Looks Like
 
-[Docs](docs/maskerjs.md).
+* [Docs](docs/maskerjs.md)
 * [JSFiddle](https://jsfiddle.net/fypyk2jp/1/)
 
 ### app.html:
