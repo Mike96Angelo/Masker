@@ -22,4 +22,7 @@ var telInput = document.getElementById('tel');
 
 telMask.bind(telInput);
 // telMask.unbind(telInput);
+
+var val = telMask.unmask(telInput.value).text;
+
 ```

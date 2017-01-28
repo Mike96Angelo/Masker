@@ -81,7 +81,6 @@ var Masker =
 	    mask: function mask(val, selectionStart, selectionEnd, maskBlank) {
 	        var _ = this;
 
-
 	        var rule = _.unmask(val, selectionStart, selectionEnd);
 
 	        val = rule.text;
@@ -303,7 +302,7 @@ var Masker =
 	        };
 	    },
 
-	    _blurLitener: function _blurLitener() {
+	    _blurListener: function _blurListener() {
 	        var masker = this;
 
 	        return function EVENTS_BLUR(evt) {
@@ -317,7 +316,7 @@ var Masker =
 	    },
 
 	    _focusListener: function _focusListener() {
-	        var _ = this;
+	        var masker = this;
 
 	        return function EVENTS_FOCUS(evt) {
 	            var el = evt.target;
