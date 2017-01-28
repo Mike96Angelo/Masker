@@ -30,7 +30,9 @@ var Masker = require('maskerjs');
 var telMask = new Masker(
     [
         '___-____',            // local
+//      '____-____',           // local 8
         '(___) ___-____',      // area
+//      '(__) ____-____',      // area 8
         '+_-___-___-____',     // international
         '+__-___-___-____',    // international 12
         '+___-___-___-____',   // international 13
