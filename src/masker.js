@@ -71,6 +71,10 @@ var Masker =
 	    _.masks.sort(function (a, b) {
 	        return a - b;
 	    });
+
+	    _.focusListener = _._focusListener();
+	    _.blurListener = _._blurListener();
+	    _.keydownListener = _._keydownListener();
 	});
 
 	Masker.definePrototype({
@@ -180,7 +184,8 @@ var Masker =
 
 	        return _.masks[_.masks.length - 1].mask;
 	    },
-	    keydownListener: function keydownListener() {
+
+	    _keydownListener: function _keydownListener() {
 	        var masker = this;
 
 	        return function EVENTS_KEYDOWN(evt, $el) {
@@ -298,7 +303,7 @@ var Masker =
 	        };
 	    },
 
-	    blurLitener: function blurLitener() {
+	    _blurLitener: function _blurLitener() {
 	        var masker = this;
 
 	        return function EVENTS_BLUR(evt) {
@@ -311,10 +316,10 @@ var Masker =
 	        };
 	    },
 
-	    focusListener: function focusListener() {
+	    _focusListener: function _focusListener() {
 	        var _ = this;
 
-	        return function EVENTS_FOCUS_CHANE_PASTE(evt) {
+	        return function EVENTS_FOCUS(evt) {
 	            var el = evt.target;
 
 	            var rule = masker.mask(el.value, el.selectionStart, el.selectionEnd,
@@ -323,6 +328,22 @@ var Masker =
 	            el.value = rule.text;
 	            el.setSelectionRange(rule.selectionStart, rule.selectionEnd);
 	        };
+	    },
+
+	    bind: function bind(el) {
+	        var _ = this;
+
+	        el.addEventListener('focus', _.focusListener, false);
+	        el.addEventListener('blur', _.blurListener, false);
+	        el.addEventListener('keydown', _.keydownListener, false);
+	    },
+
+	    unbind: function unbind(el) {
+	        var _ = this;
+
+	        el.removeEventListener('focus', _.focusListener, false);
+	        el.removeEventListener('blur', _.blurListener, false);
+	        el.removeEventListener('keydown', _.keydownListener, false);
 	    }
 	});
 

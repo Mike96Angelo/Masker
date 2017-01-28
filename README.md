@@ -4,7 +4,7 @@ A simple JavaScript library for masking HTML input fields.
 
 example:
 
-```
+```JavaScript
 var Masker = require('maskerjs');
 
 var telMask = new Masker(
@@ -18,8 +18,8 @@ var telMask = new Masker(
     /^[0-9]$/ // allowed chars
 );
 
+var telInput = document.getElementById('tel');
 
-$('input[type="tel"]').on('keydown', telMask.keydownListener());
-$('input[type="tel"]').on('focus', telMask.focusListener());
-$('input[type="tel"]').on('blur', telMask.blurListener());
+telMask.bind(telInput);
+// telMask.unbind(telInput);
 ```
