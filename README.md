@@ -13,6 +13,8 @@ $ npm install maskerjs
 ```
 # What MaskerJS Looks Like
 
+![maskerjs gif](MaskerJS.gif)
+
 * [Docs](docs/maskerjs.md)
 * [JSFiddle](https://jsfiddle.net/fypyk2jp/4/)
 
