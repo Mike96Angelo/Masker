@@ -14,12 +14,12 @@ $ npm install bars
 # What MaskerJS Looks Like
 
 * [Docs](docs/maskerjs.md)
-* [JSFiddle](https://jsfiddle.net/fypyk2jp/3/)
+* [JSFiddle](https://jsfiddle.net/fypyk2jp/4/)
 
 ### app.html:
 
 ```html
-<input id="tel" type="tel" placeholder="+1 (234) 567-8900">
+<input id="tel" type="tel" placeholder="+1-234-567-8900">
 ```
 
 ### app.js:
@@ -34,10 +34,7 @@ var telMask = new Masker(
         '(___) ___-____',      // area
 //      '(__) ____-____',      // area 8
         '+_-___-___-____',     // international
-        '+__-___-___-____',    // international 12
-        '+___-___-___-____',   // international 13
-        '+___-___-____-____',  // international 14
-        '+___-____-____-____'  // international 15
+//      '+_-__-____-____',     // international 8
     ],
     /^[0-9]$/ // allowed chars
 );
