@@ -195,7 +195,14 @@ var Masker =
 	                end = el.selectionEnd,
 	                val = el.value;
 
-	            if (evt.keyCode === 8) { // backspace
+	            if (
+	                evt.metaKey ||
+	                evt.ctrlKey ||
+	                evt.keyCode === 13 || // enter
+	                evt.keyCode === 9 // tab
+	            ) {
+	                return;
+	            } else if (evt.keyCode === 8) { // backspace
 	                rule = masker.unmask(val, start, end);
 
 	                start = rule.selectionStart;
@@ -290,8 +297,6 @@ var Masker =
 	                }
 
 	                evt.preventDefault();
-	            } else if (evt.metaKey || evt.ctrlKey) {
-	                return;
 	            } else {
 	                evt.preventDefault();
 	                return;
@@ -340,7 +345,13 @@ var Masker =
 
 	        el.addEventListener('focus', _.focusListener, false);
 	        el.addEventListener('blur', _.blurListener, false);
+	        el.addEventListener('change', _.blurListener, false);
 	        el.addEventListener('keydown', _.keydownListener, false);
+
+	        var rule = masker.mask(el.value, el.selectionStart, el.selectionEnd);
+
+	        el.value = rule.text;
+	        el.setSelectionRange(rule.selectionStart, rule.selectionEnd);
 	    },
 
 	    unbind: function unbind(el) {
@@ -348,7 +359,13 @@ var Masker =
 
 	        el.removeEventListener('focus', _.focusListener, false);
 	        el.removeEventListener('blur', _.blurListener, false);
+	        el.removeEventListener('change', _.blurListener, false);
 	        el.removeEventListener('keydown', _.keydownListener, false);
+
+	        var rule = masker.unmask(el.value, el.selectionStart, el.selectionEnd);
+
+	        el.value = rule.text;
+	        el.setSelectionRange(rule.selectionStart, rule.selectionEnd);
 	    }
 	});
 
