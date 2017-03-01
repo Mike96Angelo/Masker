@@ -1,6 +1,6 @@
 {
   "name": "maskerjs",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A simple JavaScript library for masking HTML input fields.",
   "main": "index.js",
   "scripts": {

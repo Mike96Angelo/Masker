@@ -348,7 +348,7 @@ var Masker =
 	        el.addEventListener('change', _.blurListener, false);
 	        el.addEventListener('keydown', _.keydownListener, false);
 
-	        var rule = masker.mask(el.value, el.selectionStart, el.selectionEnd);
+	        var rule = _.mask(el.value, el.selectionStart, el.selectionEnd);
 
 	        el.value = rule.text;
 	        el.setSelectionRange(rule.selectionStart, rule.selectionEnd);
@@ -362,7 +362,7 @@ var Masker =
 	        el.removeEventListener('change', _.blurListener, false);
 	        el.removeEventListener('keydown', _.keydownListener, false);
 
-	        var rule = masker.unmask(el.value, el.selectionStart, el.selectionEnd);
+	        var rule = _.unmask(el.value, el.selectionStart, el.selectionEnd);
 
 	        el.value = rule.text;
 	        el.setSelectionRange(rule.selectionStart, rule.selectionEnd);
