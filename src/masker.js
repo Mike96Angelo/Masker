@@ -72,8 +72,7 @@ var Masker =
 	        return a - b;
 	    });
 
-	    _.focusListener = _._focusListener();
-	    _.blurListener = _._blurListener();
+	    _.inputListener = _._inputListener();
 	    _.keydownListener = _._keydownListener();
 	});
 
@@ -195,14 +194,7 @@ var Masker =
 	                end = el.selectionEnd,
 	                val = el.value;
 
-	            if (
-	                evt.metaKey ||
-	                evt.ctrlKey ||
-	                evt.keyCode === 13 || // enter
-	                evt.keyCode === 9 // tab
-	            ) {
-	                return;
-	            } else if (evt.keyCode === 8) { // backspace
+	            if (evt.keyCode === 8) { // backspace
 	                rule = masker.unmask(val, start, end);
 
 	                start = rule.selectionStart;
@@ -217,29 +209,6 @@ var Masker =
 	                val = val.slice(0, start) + val.slice(end);
 
 	                end = start;
-	                evt.preventDefault();
-	            } else if (masker.filter(String.fromCodePoint(evt.keyCode))) { // allowed chars
-	                rule = masker.unmask(val, start, end);
-
-	                if (
-	                    rule.text.length < masker.masks[masker.masks.length - 1].length ||
-	                    rule.selectionStart !== rule.selectionEnd
-	                ) {
-	                    start = rule.selectionStart;
-	                    end = rule.selectionEnd;
-	                    val = rule.text;
-
-	                    start = Math.max(start, 0);
-	                    end = Math.max(end, start);
-
-	                    val = val.slice(0, start) +
-	                        String.fromCodePoint(evt.keyCode) +
-	                        val.slice(end);
-
-	                    start = Math.min(start + 1, val.length);
-	                    end = start;
-	                }
-
 	                evt.preventDefault();
 	            } else if (evt.keyCode === 38 || (evt.metaKey && evt.keyCode === 37)) { // up
 	                if (evt.shiftKey) {
@@ -298,7 +267,6 @@ var Masker =
 
 	                evt.preventDefault();
 	            } else {
-	                evt.preventDefault();
 	                return;
 	            }
 
@@ -313,23 +281,10 @@ var Masker =
 	        };
 	    },
 
-	    _blurListener: function _blurListener() {
+	    _inputListener: function _inputListener() {
 	        var masker = this;
 
-	        return function EVENTS_BLUR(evt) {
-	            var el = evt.target;
-
-	            var rule = masker.mask(el.value, el.selectionStart, el.selectionEnd);
-
-	            el.value = rule.text;
-	            el.setSelectionRange(rule.selectionStart, rule.selectionEnd);
-	        };
-	    },
-
-	    _focusListener: function _focusListener() {
-	        var masker = this;
-
-	        return function EVENTS_FOCUS(evt) {
+	        return function EVENTS_INPUT(evt) {
 	            var el = evt.target;
 
 	            var rule = masker.mask(el.value, el.selectionStart, el.selectionEnd,
@@ -340,12 +295,12 @@ var Masker =
 	        };
 	    },
 
+
+
 	    bind: function bind(el) {
 	        var _ = this;
 
-	        el.addEventListener('focus', _.focusListener, false);
-	        el.addEventListener('blur', _.blurListener, false);
-	        el.addEventListener('change', _.blurListener, false);
+	        el.addEventListener('input', _.inputListener, false);
 	        el.addEventListener('keydown', _.keydownListener, false);
 
 	        var rule = _.mask(el.value, el.selectionStart, el.selectionEnd);
@@ -357,9 +312,7 @@ var Masker =
 	    unbind: function unbind(el) {
 	        var _ = this;
 
-	        el.removeEventListener('focus', _.focusListener, false);
-	        el.removeEventListener('blur', _.blurListener, false);
-	        el.removeEventListener('change', _.blurListener, false);
+	        el.removeEventListener('input', _.inputListener, false);
 	        el.removeEventListener('keydown', _.keydownListener, false);
 
 	        var rule = _.unmask(el.value, el.selectionStart, el.selectionEnd);
