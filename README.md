@@ -46,7 +46,7 @@ var telInput = document.getElementById('tel');
 telMask.bind(telInput);
 // telMask.unbind(telInput);
 
-var val = telMask.unmask(telInput.value).text;
+var val = telMask.unmaskVal(telInput.value);
 
 ```
 
@@ -68,10 +68,10 @@ var telMask = new Masker(
 );
 
 // pass in a Masker object
-jQuery('input[type="tel"]').masker(telMask);
+jQuery('input[type="tel"]').mask(telMask);
 
 // pass in the constructor arguments
-jQuery('input[type="tel"]').masker(
+jQuery('input[type="tel"]').mask(
     [
         '___-____',            // local
         '(___) ___-____',      // area
@@ -79,4 +79,14 @@ jQuery('input[type="tel"]').masker(
     ],
     /^[0-9]$/ // allowed chars
 );
+
+// remove the masker
+jQuery('input[type="tel"]').unmask();
+
+// get the element.value masked with the passed in masker
+jQuery('input[type="tel"]').maskVal(masker);
+jQuery('input[type="tel"]').maskVal(patterns, filter);
+
+// get the element.value unmasked
+jQuery('input[type="tel"]').unmaskVal();
 ```

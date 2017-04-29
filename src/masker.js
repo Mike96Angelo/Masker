@@ -54,9 +54,25 @@ var Masker =
 
 	var Generator = __webpack_require__(2);
 
+	function makeMasks(masks) {
+	    if (typeof masks === 'string') {
+	        return [masks];
+	    } else if (masks instanceof Array) {
+	        for (var i = 0; i < masks.length; i++) {
+	            if (typeof masks[i] !== 'string') {
+	                throw new Error('masks must be a string or array of strings');
+	            }
+	        }
+	        return masks;
+	    }
+	    throw new Error('masks must be a string or array of strings');
+	}
+
 	var Masker = Generator.generate(function Masker(masks, filter) {
 	    var _ = this;
 	    _.masks = [];
+
+	    masks = makeMasks(masks);
 
 	    for (var i = 0; i < masks.length; i++) {
 	        _.masks.push({
@@ -69,7 +85,7 @@ var Masker =
 	    _._filter = filter;
 
 	    _.masks.sort(function (a, b) {
-	        return a - b;
+	        return a.length - b.length;
 	    });
 
 	    _.inputListener = _._inputListener();
@@ -295,18 +311,13 @@ var Masker =
 	        };
 	    },
 
-
-
 	    bind: function bind(el) {
 	        var _ = this;
 
 	        el.addEventListener('input', _.inputListener, false);
 	        el.addEventListener('keydown', _.keydownListener, false);
 
-	        var rule = _.mask(el.value, el.selectionStart, el.selectionEnd);
-
-	        el.value = rule.text;
-	        el.setSelectionRange(rule.selectionStart, rule.selectionEnd);
+	        _.maskInput(el);
 	    },
 
 	    unbind: function unbind(el) {
@@ -315,31 +326,107 @@ var Masker =
 	        el.removeEventListener('input', _.inputListener, false);
 	        el.removeEventListener('keydown', _.keydownListener, false);
 
+	        _.unmaskInput(el);
+	    },
+
+	    maskInput: function maskInput(el) {
+	        var _ = this;
+
+	        var rule = _.mask(el.value, el.selectionStart, el.selectionEnd);
+
+	        el.value = rule.text;
+	        el.setSelectionRange(rule.selectionStart, rule.selectionEnd);
+	    },
+
+	    unmaskInput: function unmaskInput(el) {
+	        var _ = this;
+
 	        var rule = _.unmask(el.value, el.selectionStart, el.selectionEnd);
 
 	        el.value = rule.text;
 	        el.setSelectionRange(rule.selectionStart, rule.selectionEnd);
+	    },
+
+	    maskVal: function maskVal(value) {
+	        var _ = this;
+
+	        var rule = _.mask(value, 0, 0);
+
+	        return rule.text;
+	    },
+
+	    unmaskVal: function unmaskVal(value) {
+	        var _ = this;
+
+	        var rule = _.unmask(value, 0, 0);
+
+	        return rule.text;
 	    }
 	});
 
 
 	Masker.jQueryPlugin = function ($) {
-	    $.fn.masker = function (paterns, filter) {
+	    $.fn.mask = function (patterns, filter) {
 	        var masker;
 
-	        if (Masker.isCreation(paterns)) {
-	            masker = paterns;
+	        if (Masker.isCreation(patterns)) {
+	            masker = patterns;
 	        } else {
-	            masker = new Masker(paterns, filter);
+	            masker = new Masker(patterns, filter);
 	        }
 
-	        this.on('input', masker.inputListener);
-	        this.on('keydown', masker.keydownListener);
+	        this.unmask();
+
+	        this.each(function () {
+	            var $el = $(this);
+
+	            $el.data('$_maskerjs_$', masker);
+	            $el.on('input', masker.inputListener);
+	            $el.on('keydown', masker.keydownListener);
+
+	            masker.maskInput(this);
+	        });
 
 	        return this;
 	    };
-	};
 
+	    $.fn.unmask = function () {
+	        this.each(function () {
+	            var $el = $(this);
+	            var masker = $el.data('$_maskerjs_$');
+
+	            if (!masker) return;
+
+	            $el.removeData('$_maskerjs_$');
+	            $el.off('input', masker.inputListener);
+	            $el.off('keydown', masker.keydownListener);
+
+	            masker.unmaskInput(this);
+	        });
+
+	        return this;
+	    };
+
+	    $.fn.maskVal = function (patterns, filter) {
+	        var masker;
+
+	        if (Masker.isCreation(patterns)) {
+	            masker = patterns;
+	        } else {
+	            masker = new Masker(patterns, filter);
+	        }
+
+	        return masker.maskVal(this.val());
+	    };
+
+	    $.fn.unmaskVal = function () {
+	        var masker = this.data('$_maskerjs_$');
+
+	        if (!masker) return this.val();
+
+	        return masker.unmaskVal(this.val());
+	    };
+	};
 
 	module.exports = Masker;
 
