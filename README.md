@@ -9,14 +9,14 @@ A simple JavaScript library for masking HTML input fields.
 
 ### Install:
 ```
-$ npm install maskerjs
+$ npm install --save maskerjs
 ```
 # What MaskerJS Looks Like
 
 ![maskerjs gif](MaskerJS.gif)
 
 * [Docs](docs/maskerjs.md)
-* [JSFiddle](https://jsfiddle.net/fypyk2jp/4/)
+* [JSFiddle](https://jsfiddle.net/fypyk2jp/14/)
 
 ### app.html:
 
