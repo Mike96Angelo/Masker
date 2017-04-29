@@ -322,6 +322,25 @@ var Masker =
 	    }
 	});
 
+
+	Masker.jQueryPlugin = function ($) {
+	    $.fn.masker = function (paterns, filter) {
+	        var masker;
+
+	        if (Masker.isCreation(paterns)) {
+	            masker = paterns;
+	        } else {
+	            masker = new Masker(paterns, filter);
+	        }
+
+	        this.on('input', masker.inputListener);
+	        this.on('keydown', masker.keydownListener);
+
+	        return this;
+	    };
+	};
+
+
 	module.exports = Masker;
 
 

@@ -49,3 +49,34 @@ telMask.bind(telInput);
 var val = telMask.unmask(telInput.value).text;
 
 ```
+
+## Use MaskerJS with jQuery
+
+```JavaScript
+var Masker = require('maskerjs');
+
+// added the plugin to jQuery
+Masker.jQueryPlugin(jQuery);
+
+var telMask = new Masker(
+    [
+        '___-____',            // local
+        '(___) ___-____',      // area
+        '+_-___-___-____',     // international
+    ],
+    /^[0-9]$/ // allowed chars
+);
+
+// pass in a Masker object
+jQuery('input[type="tel"]').masker(telMask);
+
+// pass in the constructor arguments
+jQuery('input[type="tel"]').masker(
+    [
+        '___-____',            // local
+        '(___) ___-____',      // area
+        '+_-___-___-____',     // international
+    ],
+    /^[0-9]$/ // allowed chars
+);
+```
