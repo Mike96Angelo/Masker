@@ -32,19 +32,16 @@ var Masker = require('maskerjs');
 var telMask = new Masker(
     [
         '___-____',            // local
-//      '____-____',           // local 8
         '(___) ___-____',      // area
-//      '(__) ____-____',      // area 8
         '+_-___-___-____',     // international
-//      '+_-__-____-____',     // international 8
     ],
     /^[0-9]$/ // allowed chars
 );
 
 var telInput = document.getElementById('tel');
 
-telMask.bind(telInput);
-// telMask.unbind(telInput);
+telMask.mask(telInput);
+// telMask.unmask(telInput);
 
 var val = telMask.unmaskVal(telInput.value);
 
