@@ -1,6 +1,6 @@
 {
   "name": "maskerjs",
-  "version": "1.8.1",
+  "version": "1.8.3",
   "description": "A simple JavaScript library for masking HTML input fields.",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/Mike96Angelo/Masker#readme",
   "devDependencies": {
-    "webpack": "^1.14.0"
+    "webpack": "^2.4.1"
   },
   "dependencies": {
     "generate-js": "^3.1.2"

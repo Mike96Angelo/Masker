@@ -1,8 +1,8 @@
 module.exports = {
-    entry: "./index.js",
+    entry: __dirname + "/index.js",
     output: {
         library: "Masker",
-        path: './src/',
+        path: __dirname + '/src/',
         filename: "masker.js"
     }
 };
